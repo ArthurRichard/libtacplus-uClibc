@@ -1,0 +1,59 @@
+20070731
+ - critical bugfix from Adam Liss - 
+   The problem is that tac_close() is called by both catchup() and tac_abort()
+   when tac_connect() times out.  And tac_close() tries to free(session) both
+   times because it cannot clear the pointer to NULL after its memory is freed.
+
+20060418
+ - make Makefile, rename libtacacs.h to libtacplus.h
+
+20020726
+  - add utility tac_perftest in samples dir - this is authentication/authorization
+    stress testing utility
+
+20020624
+  - fixes with session_id again - i fix bug with incorrect session_id
+    conversion, this bug can create problems with
+	  tacacs+ server which are working in single connection mode.
+
+20020613
+  Thanks Vladimir Sekissov for several updates:
+	- in tac_authen_get_reply - do not read session_id again,
+		this is not single mode and session id doesn't change during session
+	- add flag set in header of accounting packet (i have missed it)
+
+20020128
+	some cleanups for freebsd users
+
+20010911
+    Add patch from Ben Gras <ben@euro.net>:
+
+This is message from his mail:
+
+First of all, tac_authen.c could do with a little more error checking
+(I made a bug in a tacacs+ server which caused this piece of code to
+crash)
+Now the following is fairly straightforward, but I thought it was pretty
+important to include the failure message in the error. Also it corrects a
+bug involving alarm() - if the connect() fails, alarm() isn't reset and
+causes process to die it it's still running after the timeout. The message
+change is a silly change of mine, I don't like allcaps. The strerror(errno)
+is rather more portable than sys_errlist[errno].
+
+    Makefile fixes from Lazaro.Lopez_Mercado@alcatel.es
+    + added Makefile.2 for use with Solaris (or may be some other makes)
+
+20010910
+    Add patch from Michael Mraka (Michael.Mraka@GTSgroup.cz)
+    about correct handling connect timeouts (big thanks for
+    my ugly code cleanups)
+
+    Add archieve tacNT.zip with changed sources for working with NT
+    (great thanks to Dennis Day dennisday@columbus.rr.com)
+    Hope, I'll merge it with main tree.
+
+    Code cleanups from kissg@sztaki.hu
+
+20010719
+    project renamed to libtacplus due to some changes in development
+    and support process

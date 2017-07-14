@@ -1,0 +1,11 @@
+   Authentication server
+
+The authentication server must get authentication START
+packet, return authentication REPLY packet, get
+authentication CONTINUE packet and return REPLY packet.
+
+Can be several REPLY/CONTINUE exchanges
+
+FUNCTIONS:
+
+    

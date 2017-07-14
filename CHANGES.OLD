@@ -1,0 +1,103 @@
+29.10.98 rv
+   - added resolving that in struct sockaddr absent
+     sin_len by check __linux__ and __SVR4 defines
+
+25.01.99 rv
+   - add authorization (while not tested)
+   - getipfromname function rename to tac_getipfromname
+     and moved to tac_utils.c
+   - cisco's tac_plus.h now deprecated. All data structures
+     are moved to libtacacs.h and authen.c,author.c,account.c
+   - some changes in functions names.
+       a) send_authen_start rename to tac_authen_send_start
+       b) get_authen_start rename to tac_authen_get_start
+       c) send_reply_packet rename to tac_authen_send_reply
+       d) get_reply_packet rename to tac_authen_get_reply
+       e) send_authen_cont rename to tac_authen_send_cont
+       f) get_authen_cont rename to tac_authen_get_cont
+   - now many bug fixes (especially in server side)
+   - adding use struct session *session in all functions
+   - add accounting (while not tested)
+   - remove all printf to tac_error
+
+27.01.99 rv
+   - adding check port number in tac_connect.
+     Now if port==0 then port automatically rewrites by 49
+
+28.01.99 rv
+   - add function tac_print_authen_status to tac_utils.c
+     Its print out string value of numeric response from tacacs+ server
+
+29.01.99 rv
+   - write authentication examples in /samples for simple
+     authentication scenes
+   - additions to documentation in /doc - about authentication
+
+04.02.99 rv
+   - some fixes in authorization/accounting functions
+   - authorization client side now work
+   - write authorization client example
+
+05.02.99 rv
+   - some fixes in accounting functions
+   - accounting client side now work
+   - accounting client example now ready
+   - common AAA client example now ready
+   - some restructurization in functions for server:
+     - tac_authen_get_start now split into 2 functions:
+         tac_authen_get_start - no changes
+         tac_authen_get_start_s - without packet reading,
+           packet must be readed before
+     - tac_author_get_request now split into 2 functions:
+	 tac_author_get_request - no changes
+	 tac_author_get_request_s - without packet reading,
+	   packet must be readed before
+     - tac_account_get_request now split into 2 functions:
+	 tac_account_get_request - no changes
+	 tac_account_get_request_s - without packet reading,
+	   packet must be readed before
+   - untested and uncomplete variant of common server example 
+
+08.02.99 rv
+  - several bugfixes
+  - all error output now return 0 if failure
+    or 1 or non-zero value if success
+
+09.02.99 rv
+  - several bugfixes in authentication server functions
+  - authentication scene in common example of tacacs+ server is complete
+  - authorization scene in common example of tacacs+ server is complete
+  - several bugfixes in accounting server functions
+  - accounting scene in common example of tacacs+ server is complete
+
+10.02.99 rv
+  - add client authentication/authorization and only authorization
+    end-user functions
+
+24.02.99 rv
+  - some additions to prototype declarations in libtacacs.h
+
+07.03.99 Ronan-Yann Lorin
+  - fix MD5 encryption (flag must be set to CLEAR for enable encryption,
+    becouse md5xor is inverting encryption flag)
+
+16.03.99 rv
+  - add function int compare_password(char *pwd1, char *pwd2)
+    for compare passwords both in cleartext and CHAP
+    (pwd1 can be encrypted, pwd2 - cleartext)
+    return 0 if fail or 1 if success
+
+21.04.99 rv
+  - some modifications in Makefile. Now compiled both static and shared
+    libtacacs.
+    Create README file.
+
+27.04.99 rv
+  - add tac_client.conf sample file
+  
+22.06.99 rv
+  - various bug fixes
+
+09.07.99 rv
+  - add some simple test programs to /samples
+ 

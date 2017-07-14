@@ -1,0 +1,23 @@
+LibTACACS
+
+before compile you must set path to tac_client.conf file
+into libtacplus.h (TAC_CLIENT_CONFIG)
+(if you use end-user client functions)
+
+libtacplus.a and libtacplus.so files -
+static and dynamic library
+
+1. Linux
+simple copy libtacacs.a and libtacacs.so files to /usr/local/lib
+and libtacacs.h to /usr/local/include
+check if your /usr/local/lib directory presents in /etc/ld.so.conf
+and run ldconfig
+
+2. FreeBSD
+copy libtacacs.a to /usr/local/lib
+rename libtacacs.so to libtacacs.so.0 and copy it to /usr/local/lib
+create symbolic link for libtacacs:
+ln -s /usr/local/lib/libtacacs.so.0 /usr/local/lib/libtacacs.so
+copy libtacacs.h to /usr/local/include
+try to run "ldconfig" or "ldconfig /usr/local/lib"
+check test program, which use libtacacs, with "ldd"

@@ -1,0 +1,27 @@
+To use libtacacs+ with our embedded modules, we had to rewrite 
+some parts of the library to make it compatible with uClibc. 
+This mostly by replacing the old BSD era functions.  
+					  
+					  
+					  LibTACPLUS
+
+(old name - libtacacs)
+
+--------------------------------------------------------------
+This is a C frontend to Cisco's TACACS+ protocol.
+
+This library was a first step in project of TACACS+ server
+from our company.
+(the tacpp project was separated from it and now developing with
+own C++ implementation of tacacs+ protocol, see
+http://tacppd.org for more information)
+
+I hope, that this library will be useful for developers.
+
+You can use, modificate and redistribute this library
+without any limitations.
+--------------------------------------------------------------
+Comments and suggestions please send to me.
+
+
+Roman Volkov,  rv at kht.ru

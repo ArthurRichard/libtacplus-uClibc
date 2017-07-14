@@ -1,0 +1,21 @@
+      Accounting client
+
+common functions:
+
+tac_connect -
+  initiate connect to tacacs server
+  return struct session* value
+  
+  struct session*
+  tac_connect(  const char *peer,     - IP address of TACACS+ server
+                int timeout,          - connection timeout (sec)
+                const char *key,      - MD5 key
+                int port)             - port, if 0 its set to 49
+   
+tac_close -
+  close connection from server
+  tac_close(struct session *session);
+
+
+accounting
+

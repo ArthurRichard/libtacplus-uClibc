@@ -1,0 +1,90 @@
+common functions:
+
+tac_connect -
+  initiate connect to tacacs server
+  return struct session* value
+
+  struct session* 
+  tac_connect(	const char *peer,     - IP address of TACACS+ server
+		int timeout,          - connection timeout (sec)
+		const char *key,      - MD5 key
+		int port)             - port, if 0 its set to 49
+
+tac_close -
+  close connection from server
+  tac_close(struct session *session);	
+
+
+
+authentication
+
+  authentication scene consists several questions/answers between
+  client and server
+
+  --------------------------------------------------------------------
+  Example:  - simple ascii login check
+     You can see it in /samples/tac_authen_c.c
+  --------------------------------------------------------------------
+
+  functions:
+
+   int 
+   tac_authen_send_start (
+	 struct session *session,
+	 const char *port,
+	 const char *username,
+	 int type,
+	 const char *data
+   )
+   Where:
+       session - session identificator from tac_connect
+       port - string with port name
+       username - username
+       type - type of authentication
+	   TACACS_ENABLE_REQUEST  1     Enable Requests
+	   TACACS_ASCII_LOGIN     2     Inbound ASCII Login
+	   TACACS_PAP_LOGIN       3     Inbound PAP Login
+	   TACACS_CHAP_LOGIN      4     Inbound CHAP login
+	   TACACS_ARAP_LOGIN      5     Inbound ARAP login
+	   TACACS_PAP_OUT         6     Outbound PAP request
+	   TACACS_CHAP_OUT        7     Outbound CHAP request
+	   TACACS_ASCII_ARAP_OUT  8     Outbound ASCII and ARAP request
+	   TACACS_ASCII_CHPASS    9     ASCII change password request
+	   TACACS_PPP_CHPASS      10    PPP change password request
+	   TACACS_ARAP_CHPASS     11    ARAP change password request
+	   TACACS_MSCHAP_LOGIN    12    MS-CHAP inbound login
+	   TACACS_MSCHAP_OUT      13    MS-CHAP outbound login
+       data - string, that transmit to server
+    Return: 0 - fail   1 - success
+
+   int
+   tac_authen_get_reply(session,serv_msg,data_msg);
+      char server_msg[256];
+      char data_msg[256];
+   get reply from server
+     returns status and message/data from server
+	  TAC_PLUS_AUTHEN_STATUS_PASS     1
+	  TAC_PLUS_AUTHEN_STATUS_FAIL     2
+	  TAC_PLUS_AUTHEN_STATUS_GETDATA  3
+	  TAC_PLUS_AUTHEN_STATUS_GETUSER  4
+	  TAC_PLUS_AUTHEN_STATUS_GETPASS  5
+	  TAC_PLUS_AUTHEN_STATUS_RESTART  6
+	  TAC_PLUS_AUTHEN_STATUS_ERROR    7
+	  TAC_PLUS_AUTHEN_STATUS_FOLLOW   0x21
+
+   int
+   tac_authen_send_cont(
+	      struct session *session,   - session
+	      const char *user_msg,      - message to server
+	      const char *data           - data to server
+   )
+   send continue packet to server
+
+
+  if we are wish get login question from tacacs server,
+  when we are need set <username> to "" (void)
+      /samples/tac_authen_c.c
+
+  if we are set username in tac_authen_send_start,
+  then we are get response with password request string
+      /samples/tac_authen_c2.c

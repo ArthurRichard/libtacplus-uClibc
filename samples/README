@@ -1,0 +1,14 @@
+LIST OF example files
+ 
+  tac_authen_c*.c  - example about client authentication scene
+  tac_author_c*.c  - example about client authorization scene
+  tac_acc_c*.c     - example about client accounting scene
+
+tac_client.c  - more common example of client
+tac_server.c  - common example of server
+
+
+see throught Makefile for some options
+(add -DFBSD in CFLAGS for compile on FreeBSD)
+also for freebsd add -lcompat library for tacppd_perft
+(see in Makefile)

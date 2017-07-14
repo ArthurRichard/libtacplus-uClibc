@@ -1,0 +1,70 @@
+There are 3 type of exchange between tacacs+ server and client:
+
+authentication
+authorization
+accounting
+
+for each type of exchange client initiate separate sessions
+
+Include:
+  for use libtacacs you will need to
+     #include <libtacacs.h>
+
+Global variables:
+  
+  struct session *session;
+    you must declare struct session* variable for session description
+
+
+common functions:
+
+tac_connect -
+  initiate connect to tacacs server
+  return struct session* value
+
+  struct session* 
+  tac_connect(
+		const char *peer,     - IP address of TACACS+ server
+		int timeout,          - connection timeout (sec)
+		const char *key,      - MD5 key
+		int port              - port, if 0 its set to 49
+  )
+
+tac_close -
+  close connection from server
+  tac_close(struct session *session);	
+
+tac_error - 
+  error and message logging
+  tac_error(const char *format, ...)
+   if you compile libtacacs with -DUSE_SYSLOG
+   then its out messages to syslog
+  in other case - to stderr
+
+
+tac_getipfromname - translate name to ip addr
+   char *tac_getipfromname(const char *name)
+   return IP addr xx.xx.xx.xx
+
+tac_free_avpairs - free memory, reserved for AV-pairs array
+   void tac_free_avpairs(char **avpair)
+      avpair usually declares as
+         char *avpairs[100]; /* I think, that cannot
+                                be AVpairs more than
+                                100 */
+         and AVpairs sets as 
+         avpairs[0]=strdup("service=ppp");
+         avpairs[1]=strdup("protocol=ip");
+         avpairs[2]=strdup("addr*10.1.1.2");
+         avpairs[3]=NULL; /* NULL is a flag and must be */
+     after using this array you can free memory by
+     tac_free_avpairs
+
+tac_print_authen_status - translate numerical authentication status
+   to symbolic name
+   char *tac_print_authen_status(int status)
+
+
+tac_print_author_status - translate numerical authorization status
+   to symbolic name
+   char *tac_print_author_status(int status)
